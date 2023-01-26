@@ -9,5 +9,5 @@ require_once "../conexao.php";
  try{
 
  } catch(PDOException $err){
-    echo $erro->getMessage();
+    echo $err->getMessage();
  }
