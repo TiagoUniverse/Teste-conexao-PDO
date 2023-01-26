@@ -10,11 +10,3 @@ try{
 
 $stmt = $db->prepare('Select * from Usuario;');
 $stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// $stmt->debugDumpParams();
-
-// echo $stmt->columnCount();
-
-
-print_r($result);
