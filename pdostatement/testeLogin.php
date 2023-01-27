@@ -9,38 +9,33 @@ $email = $_POST['email'];
 
    if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
       // valid address
-      echo "O email é valido";
-  }
-  else {
+      echo "E-mail correto";
+
+      $servername = "SQLSERVER";
+      $dbname = "Placement";
+      $username = "tiagolopes";
+      $pwd = "gti2022";
+      try {
+          $pdo = new PDO("sqlsrv:server=$servername ; Database=$dbname", "$username", "$pwd");
+          // echo "Conectado com sucesso!";
+          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      } catch (Exception $e) {
+          die(print_r($e->getMessage()));
+      }
+    
+    
+      $prepare = $pdo->prepare("Select email, senha from Usuario Where status = 1 and senha = HASHBYTES('sha1', :senha) and email = :email  ");
+      $prepare->bindParam(":senha", $senha_escape);
+      $prepare->bindParam(":email", $email_escape);
+      $result = $prepare->execute();
+
+  } else {
       // invalid address
-      echo "Inválido";
-  }
-
-  $servername = "SQLSERVER";
-  $dbname = "Placement";
-  $username = "tiagolopes";
-  $pwd = "gti2022";
-  try {
-      $pdo = new PDO("sqlsrv:server=$servername ; Database=$dbname", "$username", "$pwd");
-      // echo "Conectado com sucesso!";
-      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  } catch (Exception $e) {
-      die(print_r($e->getMessage()));
+      echo "E-mail inválido!";
   }
 
 
-  $prepare = $pdo->prepare("Select email, senha from Usuario Where status = 1 and senha = HASHBYTES('sha1', :senha) and email = :email  ");
-  $prepare->bindParam(":senha", $senha_escape);
-  $prepare->bindParam(":email", $email_escape);
-  $result = $prepare->execute();
-
-
-  while ($linha = $prepare->fetch(PDO::FETCH_ASSOC)) {
-   echo "Nome: {$linha['nome']} - Email: {$linha['email']}<br />";
-}
-
-
-
+  
 
  } catch(PDOException $err){
     echo $err->getMessage();
