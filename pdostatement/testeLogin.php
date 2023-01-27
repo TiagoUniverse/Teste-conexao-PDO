@@ -29,8 +29,8 @@ $email = $_POST['email'];
     
     
       $prepare = $pdo->prepare("Select email, senha from Usuario Where status = 1 and senha = HASHBYTES('sha1', :senha) and email = :email  ");
-      $prepare->bindParam(":senha", $senha_escape);
-      $prepare->bindParam(":email", $email_escape);
+      $prepare->bindParam(":senha", $senha);
+      $prepare->bindParam(":email", $email);
       $result = $prepare->execute();
 
       if($result){
