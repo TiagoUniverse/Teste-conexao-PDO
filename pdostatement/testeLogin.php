@@ -5,6 +5,10 @@ require_once "../conexao.php";
 $senha = $_POST['senha'];
 $email = $_POST['email'];
 
+
+// E-mail está protegido deste código e o campo da senha não funciona por causa dos parênteses
+//Select email, senha from Usuario Where status = 1 and senha = HASHBYTES('sha1', '' or 1=1 --') and email = 'tiagocesar68@gmail.com'
+
  try{
 
    if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -29,13 +33,19 @@ $email = $_POST['email'];
       $prepare->bindParam(":email", $email_escape);
       $result = $prepare->execute();
 
+      if($result){
+         echo "Consulta com sucesso!";
+      } else {
+         echo "Falha na consulta";
+      }
+
   } else {
       // invalid address
       echo "E-mail inválido!";
   }
 
 
-  
+
 
  } catch(PDOException $err){
     echo $err->getMessage();
