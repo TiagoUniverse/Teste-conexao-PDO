@@ -3,6 +3,7 @@
 require_once "../conexao.php";
 
 /**
+ * PDOSTATEMENT::bindParam --  Trata os parâmetros de uma SQL . Obrigado a passar uma variação como parametro
  */
 $nome = "Tiago";
 
